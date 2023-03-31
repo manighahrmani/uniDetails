@@ -16,8 +16,7 @@ const config = require('./config');
     });
     return universityList;
   });
-
-  fs.writeFile(config.fileName, universityList.join(',\n'), (err) => {
+  fs.appendFile(config.fileName, universityList.join(',\n'), (err) => {
     if (err) throw err;
     console.log('The file has been saved!');
   });
