@@ -19,6 +19,16 @@ Open a terminal or PowerShell and run the following commands:
 git clone https://github.com/manighahrmani/uniDetails
 ```
 
+### Permission error on Windows
+On Windows, if you get an error about not having permission to run the command, run the following command:
+
+```bash
+cd C:\Users\YOUR_USERNAME\Desktop
+```
+And then run the git clone command above again.
+
+## Rest of the setup (for all machines):
+
 Then move into the directory:
 
 ```bash
@@ -28,13 +38,26 @@ cd uniDetails
 Then install the dependencies:
 
 ```bash
-npm setup
+npm run setup
 ```
 
 ## Usage
 
-First, check the config.
+To open the folder where the file is saved, run the following command (for Windows only on PowerShell):
+
+```bash
+Invoke-Item .
+```
+
+On Mac, you can use the following command:
+
+```bash
+open .
+```
+
+First, check the config (open it with notepad or any text editor).
 This file includes the first page of the UCAS list and a file name for the output.
+
 ```js
 module.exports = {
   url: "https://www.ucas.com/explore/courses?subject=Hospitality%2C%20leisure%2C%20and%20tourism&filterBy=all&studyYear=current&latLng=false&page=1",
@@ -53,15 +76,5 @@ npm start
 ```
 
 The program will extract the data and save it to the file you specified in the config.
-To open the folder where the file is saved, run the following command (for Windows only on PowerShell):
 
-```bash
-Invoke-Item .
-```
-
-On Mac, you can use the following command:
-
-```bash
-open .
-```
 
