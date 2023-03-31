@@ -31,11 +31,16 @@ const config = require('./config');
     studyModes.forEach((studyMode) => {
       studyModesList.push(studyMode.innerText.replace(/,/g, '').replace('Study mode\n', ''));
     });
-    const moreData = qualificationsList.map((element, index) => [element, studyModesList[index]]);
+    const durationsList = [];
+    const durations = document.querySelectorAll('.duration');
+    durations.forEach((duration) => {
+      durationsList.push(duration.innerText.replace(/,/g, '').replace('Duration\n', ''));
+    });
+    const moreData = qualificationsList.map((element, index) => [element, studyModesList[index], durationsList[index]]);
     return moreData;
   });
   
-  const finalData = data.map((element, index) => [element[0], element[1], moreData[index][0], moreData[index][1]]);    
+  const finalData = data.map((element, index) => [element[0], element[1], moreData[index][0], moreData[index][1], moreData[index][2]]);    
 
   for (let i = 0; i < finalData.length; i++) {
     const row = finalData[i].join(',') + '\n';
