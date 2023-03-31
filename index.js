@@ -20,15 +20,18 @@ const config = require('./config');
     const data = universityList.map((element, index) => [element, courseList[index]]);
     return data;
   });
-  console.log(data);
-  fs.appendFile(config.fileName, data.join(',\n'), (err) => {
-    if (err) throw err;
-    console.log('The file has been saved!');
-  });
+
+  for (let i = 0; i < data.length; i++) {
+    const row = data[i][0] + ',' + data[i][1] + '\n';
+    fs.appendFile(config.fileName, row, (err) => {
+      if (err) throw err;
+    });
+  }
     
 
   await browser.close();
-
+  console.log('Done');
 })();
+
 
 
