@@ -14,15 +14,31 @@ const config = require('./config');
     headers.forEach((header) => {
       const courseName = header.nextElementSibling;
       const universityName = courseName.nextElementSibling;
-      universityList.push(universityName.innerText);
-      courseList.push(header.innerText);
+      universityList.push(universityName.innerText.replace(/,/g, ''));
+      courseList.push(header.innerText.replace(/,/g, ''));
     });
     const data = universityList.map((element, index) => [element, courseList[index]]);
     return data;
   });
+  const moreData = await page.evaluate(() => {
+    const qualificationsList = [];
+    const qualifications = document.querySelectorAll('.qualification');
+    qualifications.forEach((qualification) => {
+      qualificationsList.push(qualification.innerText.replace(/,/g, '').replace('Qualification\n', ''));
+    });
+    const studyModesList = [];
+    const studyModes = document.querySelectorAll('.study-mode');
+    studyModes.forEach((studyMode) => {
+      studyModesList.push(studyMode.innerText.replace(/,/g, '').replace('Study mode\n', ''));
+    });
+    const moreData = qualificationsList.map((element, index) => [element, studyModesList[index]]);
+    return moreData;
+  });
+  
+  const finalData = data.map((element, index) => [element[0], element[1], moreData[index][0], moreData[index][1]]);    
 
-  for (let i = 0; i < data.length; i++) {
-    const row = data[i][0] + ',' + data[i][1] + '\n';
+  for (let i = 0; i < finalData.length; i++) {
+    const row = finalData[i].join(',') + '\n';
     fs.appendFile(config.fileName, row, (err) => {
       if (err) throw err;
     });
